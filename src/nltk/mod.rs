@@ -41,17 +41,98 @@ pub fn load(language: Language) -> Lines<'static> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use std::collections::HashSet;
+
+    fn assert_count(language: Language, expected_len: usize) {
+        let actual: Vec<_> = load(language).collect();
+        assert_eq!(actual.len(), expected_len);
+    }
+
+    fn assert_head(language: Language, expected: Vec<&str>) {
+        let actual: Vec<_> = load(language).take(5).collect();
+        assert_eq!(actual, expected);
+    }
+
+    #[test]
+    fn danish() {
+        assert_count(Language::Danish, 94);
+        assert_head(Language::Danish, vec!("og", "i", "jeg", "det", "at"));
+    }
+
+    #[test]
+    fn dutch() {
+        assert_count(Language::Dutch, 101);
+        assert_head(Language::Dutch, vec!("de", "en", "van", "ik", "te"));
+    }
 
     #[test]
     fn english() {
-        let words: HashSet<_> = load(Language::English).take(5).collect();
-        assert_eq!(words, [ "i", "me", "my", "myself", "we" ].iter().cloned().collect());
+        assert_count(Language::English, 181);
+        assert_head(Language::English, vec!("i", "me", "my", "myself", "we"));
+    }
+
+    #[test]
+    fn finnish() {
+        assert_count(Language::Finnish, 235);
+        assert_head(Language::Finnish, vec!("olla", "olen", "olet", "on", "olemme"));
+    }
+
+    #[test]
+    fn french() {
+        assert_count(Language::French, 156);
+        assert_head(Language::French, vec!("au", "aux", "avec", "ce", "ces"));
+    }
+
+    #[test]
+    fn german() {
+        assert_count(Language::German, 231);
+        assert_head(Language::German, vec!("aber", "alle", "allem", "allen", "aller"));
+    }
+
+    #[test]
+    fn hungarian() {
+        assert_count(Language::Hungarian, 199);
+        assert_head(Language::Hungarian, vec!("a", "ahogy", "ahol", "aki", "akik"));
+    }
+
+    #[test]
+    fn italian() {
+        assert_count(Language::Italian, 279);
+        assert_head(Language::Italian, vec!("ad", "al", "allo", "ai", "agli"));
+    }
+
+    #[test]
+    fn norwegian() {
+        assert_count(Language::Norwegian, 176);
+        assert_head(Language::Norwegian, vec!("og", "i", "jeg", "det", "at"));
+    }
+
+    #[test]
+    fn portuguese() {
+        assert_count(Language::Portuguese, 203);
+        assert_head(Language::Portuguese, vec!("de", "a", "o", "que", "e"));
     }
 
     #[test]
     fn russian() {
-        let words: Vec<_> = load(Language::Russian).take(5).collect();
-        assert_eq!(words, vec!("и", "в", "во", "не", "что"));
+        assert_count(Language::Russian, 151);
+        assert_head(Language::Russian, vec!("и", "в", "во", "не", "что"));
+    }
+
+    #[test]
+    fn spanish() {
+        assert_count(Language::Spanish, 313);
+        assert_head(Language::Spanish, vec!("de", "la", "que", "el", "en"));
+    }
+
+    #[test]
+    fn swedish() {
+        assert_count(Language::Swedish, 114);
+        assert_head(Language::Swedish, vec!("och", "det", "att", "i", "en"));
+    }
+
+    #[test]
+    fn turkish() {
+        assert_count(Language::Turkish, 53);
+        assert_head(Language::Turkish, vec!("acaba", "ama", "aslında", "az", "bazı"));
     }
 }
