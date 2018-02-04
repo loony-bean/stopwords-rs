@@ -1,9 +1,10 @@
 extern crate stopwords;
 
 use std::collections::HashSet;
+use stopwords::spark;
 
 fn main() {
-    let stops: HashSet<_> = stopwords::spark::load(stopwords::spark::Language::English).collect();
+    let stops: HashSet<_> = spark::stopwords(spark::Language::English).collect();
     let text = "Brocolli is good to eat. My brother likes to eat good brocolli, but not my mother.";
     let words: HashSet<_> = text
         .to_lowercase()

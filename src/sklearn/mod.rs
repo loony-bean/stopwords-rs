@@ -4,7 +4,7 @@ pub enum Language {
     English,
 }
 
-pub fn load(language: Language) -> Lines<'static> {
+pub fn stopwords(language: Language) -> Lines<'static> {
     let text = match language {
         Language::English => include_str!("data/english.txt"),
     };
@@ -19,7 +19,7 @@ mod tests {
 
     #[test]
     fn english() {
-        let words: HashSet<_> = load(Language::English).take(5).collect();
+        let words: HashSet<_> = stopwords(Language::English).take(5).collect();
         assert_eq!(words, [ "a", "about", "above", "across", "after" ].iter().cloned().collect());
     }
 }

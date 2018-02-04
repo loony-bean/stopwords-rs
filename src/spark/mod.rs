@@ -17,7 +17,7 @@ pub enum Language {
     Turkish,
 }
 
-pub fn load(language: Language) -> Lines<'static> {
+pub fn stopwords(language: Language) -> Lines<'static> {
     let text = match language {
         Language::Danish => include_str!("data/danish.txt"),
         Language::Dutch => include_str!("data/dutch.txt"),
@@ -43,12 +43,12 @@ mod tests {
     use super::*;
 
     fn assert_count(language: Language, expected_len: usize) {
-        let actual: Vec<_> = load(language).collect();
+        let actual: Vec<_> = stopwords(language).collect();
         assert_eq!(actual.len(), expected_len);
     }
 
     fn assert_head(language: Language, expected: Vec<&str>) {
-        let actual: Vec<_> = load(language).take(5).collect();
+        let actual: Vec<_> = stopwords(language).take(5).collect();
         assert_eq!(actual, expected);
     }
 
