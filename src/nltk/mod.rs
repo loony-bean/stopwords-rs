@@ -1,53 +1,56 @@
-use std::str::Lines;
+use super::Language;
+use super::Provider;
 
-pub enum Language {
-    Arabic,
-    Azerbaijani,
-    Danish,
-    Dutch,
-    English,
-    Finnish,
-    French,
-    German,
-    Greek,
-    Hungarian,
-    Italian,
-    Kazakh,
-    Nepali,
-    Norwegian,
-    Portuguese,
-    Romanian,
-    Russian,
-    Spanish,
-    Swedish,
-    Turkish,
+lazy_static! {
+    static ref ARABIC: Vec<&'static str> = include_str!("data/arabic.txt").lines().collect();
+    static ref AZERBAIJANI: Vec<&'static str> = include_str!("data/azerbaijani.txt").lines().collect();
+    static ref DANISH: Vec<&'static str> = include_str!("data/danish.txt").lines().collect();
+    static ref DUTCH: Vec<&'static str> = include_str!("data/dutch.txt").lines().collect();
+    static ref ENGLISH: Vec<&'static str> = include_str!("data/english.txt").lines().collect();
+    static ref FINNISH: Vec<&'static str> = include_str!("data/finnish.txt").lines().collect();
+    static ref FRENCH: Vec<&'static str> = include_str!("data/french.txt").lines().collect();
+    static ref GERMAN: Vec<&'static str> = include_str!("data/german.txt").lines().collect();
+    static ref GREEK: Vec<&'static str> = include_str!("data/greek.txt").lines().collect();
+    static ref HUNGARIAN: Vec<&'static str> = include_str!("data/hungarian.txt").lines().collect();
+    static ref ITALIAN: Vec<&'static str> = include_str!("data/italian.txt").lines().collect();
+    static ref KAZAKH: Vec<&'static str> = include_str!("data/kazakh.txt").lines().collect();
+    static ref NEPALI: Vec<&'static str> = include_str!("data/nepali.txt").lines().collect();
+    static ref NORWEGIAN: Vec<&'static str> = include_str!("data/norwegian.txt").lines().collect();
+    static ref PORTUGUESE: Vec<&'static str> = include_str!("data/portuguese.txt").lines().collect();
+    static ref ROMANIAN: Vec<&'static str> = include_str!("data/romanian.txt").lines().collect();
+    static ref RUSSIAN: Vec<&'static str> = include_str!("data/russian.txt").lines().collect();
+    static ref SPANISH: Vec<&'static str> = include_str!("data/spanish.txt").lines().collect();
+    static ref SWEDISH: Vec<&'static str> = include_str!("data/swedish.txt").lines().collect();
+    static ref TURKISH: Vec<&'static str> = include_str!("data/turkish.txt").lines().collect();
 }
 
-pub fn stopwords(language: Language) -> Lines<'static> {
-    let text = match language {
-        Language::Arabic => include_str!("data/arabic.txt"),
-        Language::Azerbaijani => include_str!("data/azerbaijani.txt"),
-        Language::Danish => include_str!("data/danish.txt"),
-        Language::Dutch => include_str!("data/dutch.txt"),
-        Language::English => include_str!("data/english.txt"),
-        Language::Finnish => include_str!("data/finnish.txt"),
-        Language::French => include_str!("data/french.txt"),
-        Language::German => include_str!("data/german.txt"),
-        Language::Greek => include_str!("data/greek.txt"),
-        Language::Hungarian => include_str!("data/hungarian.txt"),
-        Language::Italian => include_str!("data/italian.txt"),
-        Language::Kazakh => include_str!("data/kazakh.txt"),
-        Language::Nepali => include_str!("data/nepali.txt"),
-        Language::Norwegian => include_str!("data/norwegian.txt"),
-        Language::Portuguese => include_str!("data/portuguese.txt"),
-        Language::Romanian => include_str!("data/romanian.txt"),
-        Language::Russian => include_str!("data/russian.txt"),
-        Language::Spanish => include_str!("data/spanish.txt"),
-        Language::Swedish => include_str!("data/swedish.txt"),
-        Language::Turkish => include_str!("data/turkish.txt"),
-    };
+pub struct NLTK;
 
-    text.lines()
+impl Provider for NLTK {
+    fn stopwords(language: Language) -> Option<&'static [&'static str]> {
+        match language {
+            Language::Arabic => Some(&ARABIC),
+            Language::Azerbaijani => Some(&AZERBAIJANI),
+            Language::Danish => Some(&DANISH),
+            Language::Dutch => Some(&DUTCH),
+            Language::English => Some(&ENGLISH),
+            Language::Finnish => Some(&FINNISH),
+            Language::French => Some(&FRENCH),
+            Language::German => Some(&GERMAN),
+            Language::Greek => Some(&GREEK),
+            Language::Hungarian => Some(&HUNGARIAN),
+            Language::Italian => Some(&ITALIAN),
+            Language::Kazakh => Some(&KAZAKH),
+            Language::Nepali => Some(&NEPALI),
+            Language::Norwegian => Some(&NORWEGIAN),
+            Language::Portuguese => Some(&PORTUGUESE),
+            Language::Romanian => Some(&ROMANIAN),
+            Language::Russian => Some(&RUSSIAN),
+            Language::Spanish => Some(&SPANISH),
+            Language::Swedish => Some(&SWEDISH),
+            Language::Turkish => Some(&TURKISH),
+        }
+    }
 }
 
 #[cfg(test)]
@@ -55,12 +58,12 @@ mod tests {
     use super::*;
 
     fn assert_count(language: Language, expected_len: usize) {
-        let actual: Vec<_> = stopwords(language).collect();
+        let actual: Vec<_> = NLTK::stopwords(language).unwrap().iter().cloned().collect();
         assert_eq!(actual.len(), expected_len);
     }
 
     fn assert_head(language: Language, expected: Vec<&str>) {
-        let actual: Vec<_> = stopwords(language).take(5).collect();
+        let actual: Vec<_> = NLTK::stopwords(language).unwrap().iter().cloned().take(5).collect();
         assert_eq!(actual, expected);
     }
 

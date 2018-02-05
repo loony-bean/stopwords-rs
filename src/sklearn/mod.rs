@@ -1,15 +1,19 @@
-use std::str::Lines;
+use super::Language;
+use super::Provider;
 
-pub enum Language {
-    English,
+lazy_static! {
+    static ref ENGLISH: Vec<&'static str> = include_str!("data/english.txt").lines().collect();
 }
 
-pub fn stopwords(language: Language) -> Lines<'static> {
-    let text = match language {
-        Language::English => include_str!("data/english.txt"),
-    };
+pub struct SkLearn;
 
-    text.lines()
+impl Provider for SkLearn {
+    fn stopwords(language: Language) -> Option<&'static [&'static str]> {
+        match language {
+            Language::English => Some(&ENGLISH),
+            _ => None,
+        }
+    }
 }
 
 #[cfg(test)]
@@ -19,7 +23,7 @@ mod tests {
 
     #[test]
     fn english() {
-        let words: HashSet<_> = stopwords(Language::English).take(5).collect();
-        assert_eq!(words, [ "a", "about", "above", "across", "after" ].iter().cloned().collect());
+        let words: HashSet<_> = SkLearn::stopwords(Language::English).unwrap().iter().take(5).collect();
+        assert_eq!(words, [ "a", "about", "above", "across", "after" ].iter().collect());
     }
 }
