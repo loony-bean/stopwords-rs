@@ -5,6 +5,11 @@ pub mod nltk;
 pub mod spark;
 pub mod sklearn;
 
+pub use nltk::NLTK;
+pub use spark::Spark;
+pub use sklearn::SkLearn;
+
+#[derive(Clone, Copy)]
 pub enum Language {
     Arabic,
     Azerbaijani,
@@ -28,6 +33,6 @@ pub enum Language {
     Turkish,
 }
 
-pub trait Provider {
+pub trait Stopwords {
     fn stopwords(language: Language) -> Option<&'static [&'static str]>;
 }

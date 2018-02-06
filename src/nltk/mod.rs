@@ -1,5 +1,5 @@
 use super::Language;
-use super::Provider;
+use super::Stopwords;
 
 lazy_static! {
     static ref ARABIC: Vec<&'static str> = include_str!("data/arabic.txt").lines().collect();
@@ -26,7 +26,7 @@ lazy_static! {
 
 pub struct NLTK;
 
-impl Provider for NLTK {
+impl Stopwords for NLTK {
     fn stopwords(language: Language) -> Option<&'static [&'static str]> {
         match language {
             Language::Arabic => Some(&ARABIC),

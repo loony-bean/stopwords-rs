@@ -1,5 +1,5 @@
 use super::Language;
-use super::Provider;
+use super::Stopwords;
 
 lazy_static! {
     static ref DANISH: Vec<&'static str> = include_str!("data/danish.txt").lines().collect();
@@ -20,7 +20,7 @@ lazy_static! {
 
 pub struct Spark;
 
-impl Provider for Spark {
+impl Stopwords for Spark {
     fn stopwords(language: Language) -> Option<&'static [&'static str]> {
         match language {
             Language::Danish => Some(&DANISH),

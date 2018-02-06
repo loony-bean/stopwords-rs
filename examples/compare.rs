@@ -1,10 +1,6 @@
 extern crate stopwords;
 
-use stopwords::nltk::NLTK;
-use stopwords::spark::Spark;
-use stopwords::sklearn::SkLearn;
-
-use stopwords::{Language, Provider};
+use stopwords::{NLTK, Spark, SkLearn, Language, Stopwords};
 
 use std::collections::HashSet;
 

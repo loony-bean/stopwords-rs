@@ -2,8 +2,7 @@ extern crate stopwords;
 
 use std::collections::HashSet;
 
-use stopwords::spark::Spark;
-use stopwords::{Language, Provider};
+use stopwords::{Spark, Language, Stopwords};
 
 fn main() {
     let stops: HashSet<_> = Spark::stopwords(Language::English).unwrap().iter().collect();
