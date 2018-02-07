@@ -36,8 +36,8 @@ pub enum Language {
 }
 
 #[derive(Fail, PartialEq, Debug)]
-#[fail(display = "Language not supported")]
-pub struct LanguageError;
+#[fail(display = "Language '{}' is not supported", _1)]
+pub struct LanguageError(String);
 
 impl FromStr for Language {
     type Err = LanguageError;
@@ -64,7 +64,7 @@ impl FromStr for Language {
             "spanish" => Ok(Language::Spanish),
             "swedish" => Ok(Language::Swedish),
             "turkish" => Ok(Language::Turkish),
-            _ => Err(LanguageError)
+            _ => Err(LanguageError(s.to_owned()))
         }
     }
 }
