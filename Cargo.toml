@@ -5,3 +5,4 @@ authors = ["Alexey Suslov <alexey.suslov@gmail.com>"]
 
 [dependencies]
 lazy_static = "1.0.0"
+failure = "0.1.1"

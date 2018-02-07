@@ -1,5 +1,5 @@
-#[macro_use]
-extern crate lazy_static;
+#[macro_use] extern crate lazy_static;
+#[macro_use] extern crate failure;
 
 use std::str::FromStr;
 
@@ -35,8 +35,12 @@ pub enum Language {
     Turkish,
 }
 
+#[derive(Fail, PartialEq, Debug)]
+#[fail(display = "Language not supported")]
+pub struct LanguageError;
+
 impl FromStr for Language {
-    type Err = ();
+    type Err = LanguageError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         match s {
@@ -60,7 +64,7 @@ impl FromStr for Language {
             "spanish" => Ok(Language::Spanish),
             "swedish" => Ok(Language::Swedish),
             "turkish" => Ok(Language::Turkish),
-            _ => Err(())
+            _ => Err(LanguageError)
         }
     }
 }
@@ -76,6 +80,7 @@ mod tests {
     #[test]
     fn from_str() {
         assert_eq!(Language::from_str("english").ok(), Some(Language::English));
+        assert_eq!(Language::from_str("en").err(), Some(LanguageError));
         assert_eq!(Language::from_str("en").ok(), None);
     }
 }
