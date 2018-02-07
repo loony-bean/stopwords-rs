@@ -36,7 +36,7 @@ pub enum Language {
 }
 
 #[derive(Fail, PartialEq, Debug)]
-#[fail(display = "Language '{}' is not supported", _1)]
+#[fail(display = "Language '{}' is not supported", _0)]
 pub struct LanguageError(String);
 
 impl FromStr for Language {
@@ -80,7 +80,7 @@ mod tests {
     #[test]
     fn from_str() {
         assert_eq!(Language::from_str("english").ok(), Some(Language::English));
-        assert_eq!(Language::from_str("en").err(), Some(LanguageError));
+        assert_eq!(Language::from_str("en").err(), Some(LanguageError("en".to_owned())));
         assert_eq!(Language::from_str("en").ok(), None);
     }
 }
