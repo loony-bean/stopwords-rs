@@ -80,7 +80,7 @@ mod tests {
     #[test]
     fn from_str() {
         assert_eq!(Language::from_str("english").ok(), Some(Language::English));
-        assert_eq!(Language::from_str("en").err(), Some(LanguageError("en".to_owned())));
+        assert_eq!(Language::from_str("en"), Err(LanguageError("en".to_owned())));
         assert_eq!(Language::from_str("en").ok(), None);
     }
 }

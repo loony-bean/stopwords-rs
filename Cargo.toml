@@ -3,6 +3,9 @@ name = "stopwords"
 version = "0.1.0"
 authors = ["Alexey Suslov <alexey.suslov@gmail.com>"]
 
+[badges]
+travis-ci = { repository = "loony-bean/stopwords-rs", branch = "master" }
+
 [dependencies]
 lazy_static = "1.0.0"
 failure = "0.1.1"
