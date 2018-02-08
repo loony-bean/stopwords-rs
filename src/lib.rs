@@ -1,16 +1,51 @@
+//! This library provides stopwords datasets from popular text processing engines.
+//!
+//!
+//! This could help reproducing results of text analysis pipelines written using different languages and tools.
+//!
+//! # Usage
+//! ```toml
+//! [dependencies]
+//! stopwords = "0.1.0"
+//! ```
+//!
+//! ```rust
+//! extern crate stopwords;
+//!
+//! use std::collections::HashSet;
+//! use stopwords::{Spark, Language, Stopwords};
+//!
+//! fn main() {
+//!     let stops: HashSet<_> = Spark::stopwords(Language::English).unwrap().iter().collect();
+//!     let mut tokens = vec!("brocolli", "is", "good", "to", "eat");
+//!     tokens.retain(|s| !stops.contains(s));
+//!     assert_eq!(tokens, vec!("brocolli", "good", "eat"));
+//! }
+//! ```
 #[macro_use] extern crate lazy_static;
 #[macro_use] extern crate failure;
 
 use std::str::FromStr;
 
-pub mod nltk;
-pub mod spark;
-pub mod sklearn;
+mod nltk;
+mod spark;
+mod sklearn;
 
 pub use nltk::NLTK;
 pub use spark::Spark;
 pub use sklearn::SkLearn;
 
+/// Supported languages. Each provider supports only a subset of this list.
+///
+/// You can parse lowercase English name of the language to construct enum variants.
+///
+/// ```rust
+/// use std::str::FromStr;
+/// use stopwords::Language;
+///
+/// assert_eq!(Language::from_str("english").ok(), Some(Language::English));
+/// assert_eq!(Language::from_str("nepali").ok(), Some(Language::Nepali));
+/// ```
 #[derive(Clone, Copy, PartialEq, Debug)]
 pub enum Language {
     Arabic,
@@ -35,6 +70,7 @@ pub enum Language {
     Turkish,
 }
 
+/// Language parse error.
 #[derive(Fail, PartialEq, Debug)]
 #[fail(display = "Language '{}' is not supported", _0)]
 pub struct LanguageError(String);
@@ -69,6 +105,7 @@ impl FromStr for Language {
     }
 }
 
+/// Interface for getting stopwords from different providers.
 pub trait Stopwords {
     fn stopwords(language: Language) -> Option<&'static [&'static str]>;
 }

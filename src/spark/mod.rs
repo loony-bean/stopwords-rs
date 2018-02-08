@@ -18,9 +18,28 @@ lazy_static! {
     static ref TURKISH: Vec<&'static str> = include_str!("data/turkish.txt").lines().collect();
 }
 
+/// Data from [Apache Spark](https://spark.apache.org) - Scala engine for large-scale data processing.
 pub struct Spark;
 
 impl Stopwords for Spark {
+    /// Stopwords provided by `StopWordsRemover`.
+    ///
+    /// Available languages are:
+    ///
+    /// - Danish
+    /// - Dutch
+    /// - English
+    /// - Finnish
+    /// - French
+    /// - German
+    /// - Hungarian
+    /// - Italian
+    /// - Norwegian
+    /// - Portuguese
+    /// - Russian
+    /// - Spanish
+    /// - Swedish
+    /// - Turkish
     fn stopwords(language: Language) -> Option<&'static [&'static str]> {
         match language {
             Language::Danish => Some(&DANISH),

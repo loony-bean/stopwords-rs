@@ -24,9 +24,34 @@ lazy_static! {
     static ref TURKISH: Vec<&'static str> = include_str!("data/turkish.txt").lines().collect();
 }
 
+/// Data from [NLTK](http://www.nltk.org) - Python natural language toolkit.
 pub struct NLTK;
 
 impl Stopwords for NLTK {
+    /// Stopwords provided by `nltk.corpus.stopwords`.
+    ///
+    /// Available languages are:
+    ///
+    /// - Arabic
+    /// - Azerbaijani
+    /// - Danish
+    /// - Dutch
+    /// - English
+    /// - Finnish
+    /// - French
+    /// - German
+    /// - Greek
+    /// - Hungarian
+    /// - Italian
+    /// - Kazakh
+    /// - Nepali
+    /// - Norwegian
+    /// - Portuguese
+    /// - Romanian
+    /// - Russian
+    /// - Spanish
+    /// - Swedish
+    /// - Turkish
     fn stopwords(language: Language) -> Option<&'static [&'static str]> {
         match language {
             Language::Arabic => Some(&ARABIC),
