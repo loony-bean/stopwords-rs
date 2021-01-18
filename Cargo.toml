@@ -1,7 +1,7 @@
 [package]
 name = "stopwords"
 description = "Stopwords from popular text processing frameworks."
-version = "0.1.0"
+version = "0.1.1"
 authors = ["Alexey Suslov <alexey.suslov@gmail.com>"]
 license = "MIT"
 repository = "https://github.com/loony-bean/stopwords-rs"
@@ -12,5 +12,5 @@ edition = "2018"
 travis-ci = { repository = "loony-bean/stopwords-rs", branch = "master" }
 
 [dependencies]
-lazy_static = "1.0.0"
+lazy_static = "1.4.0"
 thiserror = "1.0"
