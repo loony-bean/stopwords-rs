@@ -6,10 +6,11 @@ authors = ["Alexey Suslov <alexey.suslov@gmail.com>"]
 license = "MIT"
 repository = "https://github.com/loony-bean/stopwords-rs"
 keywords = ["nlp", "language", "stopwords"]
+edition = "2018"
 
 [badges]
 travis-ci = { repository = "loony-bean/stopwords-rs", branch = "master" }
 
 [dependencies]
 lazy_static = "1.0.0"
-failure = "0.1.1"
+thiserror = "1.0"

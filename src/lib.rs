@@ -23,7 +23,7 @@
 //! }
 //! ```
 #[macro_use] extern crate lazy_static;
-#[macro_use] extern crate failure;
+#[macro_use] extern crate thiserror;
 
 use std::str::FromStr;
 
@@ -71,8 +71,8 @@ pub enum Language {
 }
 
 /// Language parse error.
-#[derive(Fail, PartialEq, Debug)]
-#[fail(display = "Language '{}' is not supported", _0)]
+#[derive(Error, PartialEq, Debug)]
+#[error("Language {0:?} is not supported")]
 pub struct LanguageError(String);
 
 impl FromStr for Language {
